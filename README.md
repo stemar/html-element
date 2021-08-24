@@ -5,20 +5,13 @@ A PHP library to use XPath expressions to get nodes of a DOMElement node set.
 The `HTMLElement` class inherits the methods and properties of the `DOMElement` class.
 
 * Will convert HTML entities to UTF-8 characters.
+* Will remove invalid tags.
 * Will not repair HTML.
 * Will not format HTML.
-* Will remove invalid tags.
-
-- [The DOMElement class](https://www.php.net/manual/en/class.domelement.php)
-- [DOMDocument outerHTML](https://stackoverflow.com/a/21382265)
-- [DOMNode innerHTML](https://stackoverflow.com/a/39193507)
-- [LIBXML_HTML_NOIMPLIED root node](https://stackoverflow.com/a/36547335)
-- [What is the difference between DOMXPath::evaluate and DOMXPath::query?](https://stackoverflow.com/q/23793816)
 
 ## Goal
 
 Reduce the repetitive lines of code needed to query a `DOMElement` with an XPath expression.
-
 
 > `DOMDocument::loadHTML()` will add `<body>` tag as the root node
 > but this doesn't affect XPath expressions.
@@ -26,8 +19,7 @@ Reduce the repetitive lines of code needed to query a `DOMElement` with an XPath
 ## Installation
 
 ```bash
-git clone --depth 1 https://github.com/stemar/html-element.git
-cd html-element
+git clone --depth=1 https://github.com/stemar/html-element.git
 ```
 
 ---
@@ -173,6 +165,8 @@ foreach ($elements as $element) {
     echo $element->nodeValue, PHP_EOL;
     echo $element->getAttribute('href'), PHP_EOL;
 }
+$p = HTMLElement::new($html)->xpath('//p')[0];
+echo HTMLElement::new($p)->xpath('//a')[0];
 ```
 
 Result:
@@ -180,82 +174,13 @@ Result:
 ```console
 Link
 #
+<a href="#">Link</a>
 ```
 
----
+## References
 
-## PHP Doc
-
-```php
-/**
- * Instantiate $this with provided HTML.
- *
- * @param string $html
- * @return HTMLElement
- */
-function __construct($html) {}
-
-/**
- * Call the __construct method statically.
- *
- * @param string $html
- * @return HTMLElement
- */
-static function new($html) {}
-
-/**
- * Build an HTML's DOMDocument object encoded in UTF-8.
- *
- * @param string $html
- * @return DOMDocument
- */
-function document($html) {}
-
-/**
- * Generate DOMElement nodes
- *
- * @param string $expression
- * @param DOMNode|DOMElement $contextnode
- * @param int $nodetype
- * @return Generator
- */
-function generator($expression, $contextnode = NULL, $nodetype = XML_ELEMENT_NODE) {}
-
-/**
- * Get an array of DOMElement objects (a.k.a. nodes) from an XPath expression.
- *
- * Not a DOMNodeList collection!
- * Each array item inherits all DOMElement properties and methods.
- * @param string $expression
- * @param DOMNode|DOMElement $contextnode
- * @return array
- */
-function elements($expression, $contextnode = NULL) {}
-
-/**
- * Get outerHTML of DOMElement.
- *
- * @param DOMElement $element
- * @return string
- */
-function outerHTML($element) {}
-
-/**
- * Get innerHTML of DOMElement.
- *
- * @param DOMElement $element
- * @return string
- */
-function innerHTML($element) {
-
-/**
- * Get an array of outerHTML strings from an XPath expression.
- *
- * @param string $expression
- * @param DOMNode|DOMElement $contextnode
- * @return array
- */
-function xpath($expression, $contextnode = NULL) {}
-```
-
----
+- [The DOMElement class](https://www.php.net/manual/en/class.domelement.php)
+- [DOMDocument outerHTML](https://stackoverflow.com/a/21382265)
+- [DOMNode innerHTML](https://stackoverflow.com/a/39193507)
+- [LIBXML_HTML_NOIMPLIED root node](https://stackoverflow.com/a/36547335)
+- [What is the difference between DOMXPath::evaluate and DOMXPath::query?](https://stackoverflow.com/q/23793816)

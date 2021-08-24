@@ -166,7 +166,7 @@ foreach ($elements as $element) {
     echo $element->getAttribute('href'), PHP_EOL;
 }
 $p = HTMLElement::new($html)->xpath('//p')[0];
-echo HTMLElement::new($p)->xpath('//a')[0];
+echo HTMLElement::new($p)->xpath('//a')[0], PHP_EOL;
 ```
 
 Result:

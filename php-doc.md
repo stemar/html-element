@@ -71,5 +71,3 @@ function innerHTML($element) {
  */
 function xpath($expression, $contextnode = NULL) {}
 ```
-
----
